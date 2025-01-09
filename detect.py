@@ -165,6 +165,10 @@ def run(
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
     stride, names, pt = model.stride, model.names, model.pt
+    names[2] = "Mobil"
+    names [3] = "Motor"
+    names [5] = "Bis"
+    names [7] = "Truk"
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Dataloader
@@ -248,7 +252,7 @@ def run(
                 # Print results
                 for c in det[:, 5].unique():
                     n = (det[:, 5] == c).sum()  # detections per class
-                    s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
+                    s += f"{n} {names[int(c)]}{'' * (n > 1)}, "  # add to string
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
